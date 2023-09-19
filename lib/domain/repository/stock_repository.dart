@@ -1,7 +1,9 @@
+import 'package:clean_architecture_2/domain/model/company_info.dart';
 import 'package:clean_architecture_2/domain/model/company_list.dart';
 import 'package:clean_architecture_2/util/result.dart';
 
 abstract class StockRepository{
-  Future<Result<List<CompanyList>>> getCompanyList(
-      bool fetchFromRemote, String query);
+  Future<Result<List<CompanyList>>> getCompanyList(bool fetchFromRemote, String query);
+
+  Future<Result<CompanyInfo>> getCompanyInfo(String symbol);
 }

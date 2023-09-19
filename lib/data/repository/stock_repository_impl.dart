@@ -2,6 +2,7 @@ import 'package:clean_architecture_2/csv/company_list_parser.dart';
 import 'package:clean_architecture_2/data/mapper/company_mapper.dart';
 import 'package:clean_architecture_2/data/source/local/stock_dao.dart';
 import 'package:clean_architecture_2/data/source/remote/stock_api.dart';
+import 'package:clean_architecture_2/domain/model/company_info.dart';
 import 'package:clean_architecture_2/domain/model/company_list.dart';
 import 'package:clean_architecture_2/domain/repository/stock_repository.dart';
 import 'package:clean_architecture_2/util/result.dart';
@@ -49,6 +50,16 @@ class StockRepositoryImpl implements StockRepository {
       return Result.success(remoteList);
     } catch (e) {
       return Result.error(Exception('Data load failed : ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Result<CompanyInfo>> getCompanyInfo(String symbol) async{
+    try{
+      final dto = await _api.getCompanyInfo(symbol: symbol);
+      return Result.success(dto.toCompanyInfo());
+    } catch (e){
+      return Result.error(Exception('load company info failed : ${e.toString()}'));
     }
   }
 }
